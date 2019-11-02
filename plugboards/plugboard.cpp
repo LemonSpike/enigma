@@ -18,23 +18,23 @@ int Plugboard::read_plugboard_config(const char *filename) {
   }
 
   map<int, int> mapping;
-  
+
   int error_code = NO_ERROR;
   while (!input.eof()) {
     while (isspace(input.peek()))
       input.get();
-    if (input.peek() == '\0')
+    if (input.peek() == EOF)
       return NO_ERROR;
-    
+
     int first_number = read_number(input, error_code);
     if (error_code != NO_ERROR)
       return error_code;
 
     while (isspace(input.peek()))
       input.get();
-    if (input.peek() == '\0')
+    if (input.peek() == EOF)
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-    
+
     int second_number = read_number(input, error_code);
     if (error_code != NO_ERROR)
       return error_code;
@@ -42,13 +42,14 @@ int Plugboard::read_plugboard_config(const char *filename) {
     error_code = check_mapping(first_number, second_number, mapping);
     if (error_code != NO_ERROR)
       return error_code;
+
   }
   return NO_ERROR;
 }
-  
+
 /**
  * This function reads a 1-2 digit number from an input file stream.
- * 
+ *
  *  @param in The input file stream.
  *  @param error_code The error code is updated if the number was not
  *  valid, or the filestream couldn't be opened.
@@ -71,7 +72,7 @@ int Plugboard::read_number(ifstream& in, int& error_code) {
   int second_digit = get_digit(second, error_code);
   if (error_code != NO_ERROR)
     return INVALID_DIGIT;
-  
+
   char next = get_character(in, error_code);
   if (error_code != NO_ERROR)
     return INVALID_DIGIT;
@@ -87,7 +88,7 @@ int Plugboard::read_number(ifstream& in, int& error_code) {
     return INVALID_DIGIT;
   }
 }
-  
+
 /**
  * This function reads a character from the input file stream.
  *
@@ -125,14 +126,13 @@ int Plugboard::get_digit(char value, int &error_code) {
  * This function checks for self-connected contacts, and contacts with more
  * than one connection.
  *
- * @param contact_one The position of contact one as a relative index. 
+ * @param contact_one The position of contact one as a relative index.
  * @param contact_two The position of contact two as a relative index.
  * @param mapping The mapping of contacts expressed between indices.
  * @return check_mapping The error code is returned.
  */
-int Plugboard::check_mapping(int contact_one,
-			     int contact_two,
-			     map<int, int> &mapping) {
+int Plugboard::check_mapping(int contact_one, int contact_two,
+                             map<int, int> &mapping) {
   if (contact_one == contact_two)
     return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
 
