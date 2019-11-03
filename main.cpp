@@ -11,6 +11,12 @@ using namespace std;
  */
 void print_error(int error_code);
 
+/**
+ * This function prints a helpful error message for an insufficient number
+ * of parameters.
+ */
+void print_insufficient_params_error();
+
 int main(int argc, char** argv) {
 
   // Minimum number of command line arguments.
@@ -36,16 +42,7 @@ void print_error(int error_code) {
   case NO_ERROR:
     break;
   case INSUFFICIENT_NUMBER_OF_PARAMETERS:
-    cerr << "A minimum of three command line arguments are required, in";
-    cerr << " addition to the executable filepath." << endl;
-    cerr << "The first argument should specify the plugboard's wiring map.";
-    cerr << endl;
-    cerr << "The second argument should specify the reflector's wiring map.";
-    cerr << endl;
-    cerr << "The next optional arguments can specify rotor wiring maps.";
-    cerr << endl;
-    cerr << "The last argument should specify the rotors' initial positions.";
-    cerr << endl;
+    print_insufficient_params_error();
     break;
   case INVALID_INPUT_CHARACTER:
     cerr << "The message to be encrypted needs to consist of only whitespace ";
@@ -56,7 +53,43 @@ void print_error(int error_code) {
     cerr << "indices in the range 0-25 representing a letter from the ";
     cerr << "alphabet." << endl;
     break;
+  case NON_NUMERIC_CHARACTER:
+    cerr << "The config files cannot have any non-numeric characters." << endl;
+    break;
+  case IMPOSSIBLE_PLUGBOARD_CONFIGURATION:
+    cerr << "The plugboard configuration cannot have contacts mapped to ";
+    cerr << "themselves or with more than one other contact." << endl;
+    break;
+  case INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS:
+    cerr << "The plugboard configuration contains an invalid number of ";
+    cerr << "parameters." << endl;
+    break;
+  case INVALID_ROTOR_MAPPING:
+    break;
+  case NO_ROTOR_STARTING_POSITION:
+    break;
+  case INVALID_REFLECTOR_MAPPING:
+    break;
+  case INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS:
+    break;
+  case ERROR_OPENING_CONFIGURATION_FILE:
+    cerr << "A configuration file couldn't be opened or encountered errors ";
+    cerr << "during reading." << endl;
+    break;
   default:
     break;
   }
+}
+
+void print_insufficient_params_error() {
+  cerr << "A minimum of three command line arguments are required, in";
+  cerr << " addition to the executable filepath." << endl;
+  cerr << "The first argument should specify the plugboard's wiring map.";
+  cerr << endl;
+  cerr << "The second argument should specify the reflector's wiring map.";
+  cerr << endl;
+  cerr << "The next optional arguments can specify rotor wiring maps.";
+  cerr << endl;
+  cerr << "The last argument should specify the rotors' initial positions.";
+  cerr << endl;
 }
