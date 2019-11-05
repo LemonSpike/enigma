@@ -1,7 +1,9 @@
 #include <fstream>
 #include <iostream>
-#include "errors.h"
-#include "plugboards/plugboard.h"
+#include <map>
+#include "../errors.h"
+#include "../plugboards/plugboard.h"
+#include "../rotors/rotor.h"
 
 using namespace std;
 
@@ -28,12 +30,26 @@ int main(int argc, char** argv) {
   }
 
   Plugboard plugboard;
-  int error_code = plugboard.read_plugboard_config(argv[1]);
+  map<int, int> plug_mapping;
+  int error_code = plugboard.read_plugboard_config(argv[1], plug_mapping);
+
   if (error_code != NO_ERROR) {
     print_error(error_code);
     return error_code;
   }
 
+  Rotor rotor;
+  int rotor_mapping[26] = {};
+  int turnover_notches[26] = {};
+  
+  error_code = rotor.read_rotor_config(argv[3],
+				       rotor_mapping,
+				       turnover_notches);
+  if (error_code != NO_ERROR) {
+    print_error(error_code);
+    return error_code;
+  }
+  
   return error_code;
 }
 

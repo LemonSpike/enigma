@@ -1,7 +1,6 @@
 #ifndef PLUGBOARD_H
 #define PLUGBOARD_H
 #include <map>
-
 using namespace std;
 
 /* This class reads the plugboard config files and checks if they're 
@@ -19,18 +18,12 @@ public:
   * @return read_plugboard_config An error code is returned. This is
   * non-zero if error arises, or zero otherwise.
   */
-  int read_plugboard_config(const char *filename);
+  int read_plugboard_config(const char *filename, map<int, int> mapping);
 
 private:
-  int read_number(ifstream& in, int& error_code);
-
-  char get_character(ifstream& in, int& error_code);
-
-  int get_digit(char value, int &error_code);
-
   int check_mapping(int contact_one,
 		    int contact_two,
-		    map<int, int> &mapping);
+		    map<int, int> mapping);
 };
 
 #endif
