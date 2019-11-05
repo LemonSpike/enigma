@@ -42,6 +42,11 @@ int Rotor::read_rotor_config(char *filename,
       return error_code;
     counter++;
   }
+  if (counter < 25) {
+    cerr << "Not all inputs mapped in rotor file: rotor.rot" << endl;
+    return INVALID_ROTOR_MAPPING;
+  }
+  return NO_ERROR;
 }
 
 /**
@@ -64,10 +69,14 @@ int Rotor::add_turnover_notch(ifstream &in, int *turnover_notches) {
  */
 int Rotor::check_mapping(int number, int mapping[26], int counter) {
   if (number == counter)
-    return INVALID_REFLECTOR_MAPPING;
+    return INVALID_ROTOR_MAPPING;
   for (int i = 0; i < NO_OF_LETTERS; i++) {
-    if (mapping[i] == number)
-      return INVALID_REFLECTOR_MAPPING;
+    if (mapping[i] == number) {
+      cerr << "Invalid mapping of input " << counter << "to output " << number;
+      cerr << "(output " << number << "is already mapped to from input " << i;
+      cerr << ") in" << endl; 
+      return INVALID_ROTOR_MAPPING;
+    }
   }
   return NO_ERROR;
 }
