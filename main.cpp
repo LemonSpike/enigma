@@ -7,7 +7,7 @@
 
 using namespace std;
 
-enum FileType { plugboard, reflector, rotor_mapping, rotor_pos };
+enum FileType { comm_line, pb, reflector, rot_mapping, rot_pos };
 
 /**
  * This function prints a helpful error message to stderr for a given code.
@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
   const int MIN_ARG = 4;
 
   if (argc < MIN_ARG) {
-    print_error(INSUFFICIENT_NUMBER_OF_PARAMETERS);
+    print_error(INSUFFICIENT_NUMBER_OF_PARAMETERS, comm_line);
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
 
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
   int error_code = plugboard.read_plugboard_config(argv[1], plug_mapping);
 
   if (error_code != NO_ERROR) {
-    print_error(error_code, FileType.plugboard);
+    print_error(error_code, pb);
     return error_code;
   }
 
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
 				       rotor_mapping,
 				       turnover_notches);
   if (error_code != NO_ERROR) {
-    print_error(error_code, FileType.rotor_mapping);
+    print_error(error_code, rot_mapping);
     return error_code;
   }
   
@@ -74,9 +74,9 @@ void print_error(int error_code, FileType type) {
     cerr << "alphabet." << endl;
     break;
   case NON_NUMERIC_CHARACTER:
-    if (type == plugboard)
+    if (type == pb)
       cerr << "Non-numeric character in plugboard file plugboard.pb" << endl;
-    if (type == rotor_mapping) {
+    if (type == rot_mapping) {
       cerr << "Non-numeric character for mapping in rotor file rotor.rot";
       cerr << endl;
     }

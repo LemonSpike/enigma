@@ -22,6 +22,7 @@ int Rotor::read_rotor_config(char *filename,
   FileReader reader;
 
   int error_code = NO_ERROR;
+  int counter = 0;
   while (!input.eof()) {
     while (isspace(input.peek()))
       input.get();
@@ -35,10 +36,11 @@ int Rotor::read_rotor_config(char *filename,
     if (sizeof(mapping) / sizeof(mapping[0]) >= NO_OF_LETTERS) {
       error_code = add_turnover_notch(input, turnover_notches);
     } else {
-      error_code = check_mapping(number, mapping);
+      error_code = check_mapping(number, mapping, counter);
     }
     if (error_code != NO_ERROR)
       return error_code;
+    counter++;
   }
 }
 
@@ -60,7 +62,12 @@ int Rotor::add_turnover_notch(ifstream &in, int *turnover_notches) {
  * @return check_mapping This returns a non-zero error code if mapping 
  * is not valid. Otherwise NO_ERROR is returned.
  */
-int Rotor::check_mapping(int number, int mapping[26]) {
-
+int Rotor::check_mapping(int number, int mapping[26], int counter) {
+  if (number == counter)
+    return INVALID_REFLECTOR_MAPPING;
+  for (int i = 0; i < NO_OF_LETTERS; i++) {
+    if (mapping[i] == number)
+      return INVALID_REFLECTOR_MAPPING;
+  }
   return NO_ERROR;
 }

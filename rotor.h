@@ -22,6 +22,6 @@ public:
 
 private:
   int add_turnover_notch(ifstream &in, int *turnover_notches);
-  int check_mapping(int number, int mapping[26]);
+  int check_mapping(int number, int mapping[26], int counter);
 };
 
