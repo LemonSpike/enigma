@@ -13,11 +13,11 @@ int Plugboard::read_plugboard_config(const char *filename,
   ifstream input(filename);
 
   if (input.fail()) {
-    cerr << "Error opening plugboard configuration file.";
+    err_stream << "Error opening plugboard configuration file.";
     return ERROR_OPENING_CONFIGURATION_FILE;
   }
 
-  FileReader reader;
+  FileReader reader(err_stream);
 
   int error_code = NO_ERROR;
   while (!input.eof()) {
@@ -32,9 +32,11 @@ int Plugboard::read_plugboard_config(const char *filename,
 
     while (isspace(input.peek()))
       input.get();
-    if (input.peek() == EOF)
+    if (input.peek() == EOF) {
+      err_stream << "Incorrect number of parameters in plugboard file ";
+      err_stream << "plugboard.pb" << endl;
       return INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS;
-
+    }
     int second_number = reader.read_number(input, error_code);
     if (error_code != NO_ERROR)
       return error_code;
@@ -58,17 +60,29 @@ int Plugboard::read_plugboard_config(const char *filename,
 int Plugboard::check_mapping(int contact_one,
 			     int contact_two,
                              map<int, int> mapping) {
-  
-  if (contact_one == contact_two)
+
+  if (contact_one == contact_two) {
+    print_configuration_error();
     return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+  }
 
   map<int, int>::iterator iter;
   for ( iter = mapping.begin(); iter != mapping.end(); iter++) {
-    if (iter->first == contact_one || iter->second == contact_one)
+    if (iter->first == contact_one || iter->second == contact_one) {
+      print_configuration_error();
       return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-    if (iter->first == contact_two || iter->second == contact_two)
+    }
+    if (iter->first == contact_two || iter->second == contact_two) {
+      print_configuration_error();
       return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
+    }
   }
   mapping[contact_one] = contact_two;
   return NO_ERROR;
+}
+
+/* Prints a helpful error message for an invalid configuration. */
+void Plugboard::print_configuration_error() {
+  err_stream << "The plugboard configuration cannot have contacts mapped to ";
+  err_stream << "themselves or with more than one other contact." << endl;
 }

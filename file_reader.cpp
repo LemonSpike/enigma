@@ -29,12 +29,20 @@ int FileReader::read_number(ifstream& in, int& error_code) {
   if (isspace(next) || in.eof()) {
     int result = first_digit*10 + second_digit;
     error_code = (result < 26) ? NO_ERROR : INVALID_INDEX;
+    if (error_code == INVALID_INDEX) {
+      err_stream << "The plugboard, rotor and reflector configurations only ";
+      err_stream << "permit indices in the range 0-25 representing a letter from";
+      err_stream << " the alphabet." << endl;
+    }
     return (error_code == NO_ERROR) ? result : INVALID_DIGIT;
   } else if (next < '0' || next > '9') {
     error_code = NON_NUMERIC_CHARACTER;
     return INVALID_DIGIT;
   } else {
     error_code = INVALID_INDEX;
+    err_stream << "The plugboard, rotor and reflector configurations only ";
+    err_stream << "permit indices in the range 0-25 representing a letter from";
+    err_stream << " the alphabet." << endl;
     return INVALID_DIGIT;
   }
 }
@@ -43,6 +51,7 @@ char FileReader::get_character(ifstream& in, int& error_code) {
   char character = in.get();
   if (in.fail()) {
     error_code = ERROR_OPENING_CONFIGURATION_FILE;
+    err_stream << "Error opening plugboard configuration file.";
     return EOF;
   }
   return character;

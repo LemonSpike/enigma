@@ -15,11 +15,11 @@ int Rotor::read_rotor_config(char *filename,
   ifstream input(filename);
 
   if (input.fail()) {
-    cerr << "Error opening plugboard configuration file.";
+    err_stream << "Error opening plugboard configuration file.";
     return ERROR_OPENING_CONFIGURATION_FILE;
   }
 
-  FileReader reader;
+  FileReader reader(err_stream);
 
   int error_code = NO_ERROR;
   int counter = 0;
@@ -33,17 +33,16 @@ int Rotor::read_rotor_config(char *filename,
     if (error_code != NO_ERROR)
       return error_code;
 
-    if (sizeof(mapping) / sizeof(mapping[0]) >= NO_OF_LETTERS) {
+    if (sizeof(mapping) / sizeof(mapping[0]) >= NO_OF_LETTERS)
       error_code = add_turnover_notch(input, turnover_notches);
-    } else {
+    else
       error_code = check_mapping(number, mapping, counter);
-    }
     if (error_code != NO_ERROR)
       return error_code;
     counter++;
   }
-  if (counter < 25) {
-    cerr << "Not all inputs mapped in rotor file: rotor.rot" << endl;
+  if (counter < 26) {
+    err_stream << "Not all inputs mapped in rotor file: rotor.rot" << endl;
     return INVALID_ROTOR_MAPPING;
   }
   return NO_ERROR;
@@ -55,7 +54,7 @@ int Rotor::read_rotor_config(char *filename,
  * @param turnover_notches This stores the positions of all the notches.
  * @return add_turnover_notch This returns an error code or 0 if successful.
  */
-int Rotor::add_turnover_notch(ifstream &in, int *turnover_notches) {
+int Rotor::add_turnover_notch(ifstream &in, int turnover_notches[26]) {
   return NO_ERROR;
 }
 
@@ -64,17 +63,22 @@ int Rotor::add_turnover_notch(ifstream &in, int *turnover_notches) {
  * returns an error if found.
  * @param number The number to be added to the mapping.
  * @param mapping The mapping of letters to zero-based indices.
- * @return check_mapping This returns a non-zero error code if mapping 
+ * @return check_mapping This returns a non-zero error code if mapping
  * is not valid. Otherwise NO_ERROR is returned.
  */
 int Rotor::check_mapping(int number, int mapping[26], int counter) {
-  if (number == counter)
+  if (number == counter) {
+    err_stream << "Invalid mapping of input " << counter << "to output ";
+    err_stream << number << "(output " << number;
+    err_stream << "is already mapped to from input ";
+    err_stream << counter << ") in" << endl;
     return INVALID_ROTOR_MAPPING;
+  }
   for (int i = 0; i < NO_OF_LETTERS; i++) {
     if (mapping[i] == number) {
-      cerr << "Invalid mapping of input " << counter << "to output " << number;
-      cerr << "(output " << number << "is already mapped to from input " << i;
-      cerr << ") in" << endl; 
+      err_stream << "Invalid mapping of input " << counter << " to output ";
+      err_stream << number << " (output " << number << "is already mapped to";
+      err_stream << " from input " << i << ") in" << endl;
       return INVALID_ROTOR_MAPPING;
     }
   }

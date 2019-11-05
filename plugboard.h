@@ -3,15 +3,24 @@
 #include <map>
 using namespace std;
 
-/* This class reads the plugboard config files and checks if they're 
+/* This class reads the plugboard config files and checks if they're
    valid. */
 class Plugboard {
 
+  ostream &err_stream;
+
 public:
+/**
+ * This function initialises a Plugboard with the stderr stream.
+ * @param stream the stderr stream.
+ * @return Plugboard The class instance.
+ */
+ Plugboard(ostream& stream): err_stream(stream) {}
+
  /**
   * This function reads a plugboard config from a file with filename.
   * it updates the mapping if the config is valid, and otherwise
-  * returns an error code. 
+  * returns an error code.
   *
   * @param filename File path of plugboard configuration.
   * @param mapping Key mapping of plugboard configuration.
@@ -24,6 +33,7 @@ private:
   int check_mapping(int contact_one,
 		    int contact_two,
 		    map<int, int> mapping);
+  void print_configuration_error();
 };
 
 #endif

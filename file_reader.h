@@ -7,7 +7,17 @@ using namespace std;
 /* Helper class to read numbers from input files. */
 class FileReader {
 
+  ostream &err_stream;
+
 public:
+
+  /**
+   * This initializes FileReader with the correct error stream.
+   * @param stream The error stream.
+   * @return FileReader The FileReader with the correct error stream.
+   */
+ FileReader(ostream &stream): err_stream(stream) {}
+
   /**
    * This function reads a 1-2 digit number from an input file stream.
    *
