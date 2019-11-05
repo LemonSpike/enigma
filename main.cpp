@@ -7,11 +7,14 @@
 
 using namespace std;
 
+enum FileType { plugboard, reflector, rotor_mapping, rotor_pos };
+
 /**
  * This function prints a helpful error message to stderr for a given code.
- * @param error The error
+ * @param error The error.
+ * @param type The file type which caused the error.
  */
-void print_error(int error_code);
+void print_error(int error_code, FileType type);
 
 /**
  * This function prints a helpful error message for an insufficient number
@@ -34,7 +37,7 @@ int main(int argc, char** argv) {
   int error_code = plugboard.read_plugboard_config(argv[1], plug_mapping);
 
   if (error_code != NO_ERROR) {
-    print_error(error_code);
+    print_error(error_code, FileType.plugboard);
     return error_code;
   }
 
@@ -46,19 +49,20 @@ int main(int argc, char** argv) {
 				       rotor_mapping,
 				       turnover_notches);
   if (error_code != NO_ERROR) {
-    print_error(error_code);
+    print_error(error_code, FileType.rotor_mapping);
     return error_code;
   }
   
   return error_code;
 }
 
-void print_error(int error_code) {
+void print_error(int error_code, FileType type) {
   switch (error_code) {
   case NO_ERROR:
     break;
   case INSUFFICIENT_NUMBER_OF_PARAMETERS:
-    print_insufficient_params_error();
+    cerr << "usage: enigma plugboard-file reflector-file (<rotor-file>)* ";
+    cerr << "rotor-positions" << endl;
     break;
   case INVALID_INPUT_CHARACTER:
     cerr << "The message to be encrypted needs to consist of only whitespace ";
@@ -70,15 +74,20 @@ void print_error(int error_code) {
     cerr << "alphabet." << endl;
     break;
   case NON_NUMERIC_CHARACTER:
-    cerr << "The config files cannot have any non-numeric characters." << endl;
+    if (type == plugboard)
+      cerr << "Non-numeric character in plugboard file plugboard.pb" << endl;
+    if (type == rotor_mapping) {
+      cerr << "Non-numeric character for mapping in rotor file rotor.rot";
+      cerr << endl;
+    }
     break;
   case IMPOSSIBLE_PLUGBOARD_CONFIGURATION:
     cerr << "The plugboard configuration cannot have contacts mapped to ";
     cerr << "themselves or with more than one other contact." << endl;
     break;
   case INCORRECT_NUMBER_OF_PLUGBOARD_PARAMETERS:
-    cerr << "The plugboard configuration contains an invalid number of ";
-    cerr << "parameters." << endl;
+    cerr << "Incorrect number of parameters in plugboard file plugboard.pb";
+    cerr << endl;
     break;
   case INVALID_ROTOR_MAPPING:
     break;
@@ -95,17 +104,4 @@ void print_error(int error_code) {
   default:
     break;
   }
-}
-
-void print_insufficient_params_error() {
-  cerr << "A minimum of three command line arguments are required, in";
-  cerr << " addition to the executable filepath." << endl;
-  cerr << "The first argument should specify the plugboard's wiring map.";
-  cerr << endl;
-  cerr << "The second argument should specify the reflector's wiring map.";
-  cerr << endl;
-  cerr << "The next optional arguments can specify rotor wiring maps.";
-  cerr << endl;
-  cerr << "The last argument should specify the rotors' initial positions.";
-  cerr << endl;
 }
