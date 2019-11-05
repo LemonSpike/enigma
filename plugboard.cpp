@@ -1,8 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <map>
-#include "../errors.h"
-#include "../file_reader/file_reader.h"
+#include "errors.h"
+#include "file_reader.h"
 #include "plugboard.h"
 
 using namespace std;

@@ -1,5 +1,4 @@
-OBJ = main.o file_reader/file_reader.o plugboards/plugboard.o \
-rotors/rotor.o
+OBJ = main.o file_reader.o plugboard.o rotor.o
 EXE = enigma
 CXX = g++
 CXXFLAGS = -Wall -Wextra -g -MMD
@@ -7,7 +6,7 @@ CXXFLAGS = -Wall -Wextra -g -MMD
 $(EXE): $(OBJ)
 	$(CXX) $^ -o $@
 
-%.o: %.cpp %/%.cpp makefile
+%.o: %.cpp makefile
 	$(CXX) $(CXXFLAGS) -c $<
 
 -include $(OBJ:.o=.d)

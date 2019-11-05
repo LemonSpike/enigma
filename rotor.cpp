@@ -1,8 +1,8 @@
 #include <fstream>
 #include <iostream>
 #include "rotor.h"
-#include "../file_reader/file_reader.h"
-#include "../errors.h"
+#include "file_reader.h"
+#include "errors.h"
 
 using namespace std;
 

@@ -2,8 +2,8 @@
 #include <iostream>
 #include <map>
 #include "errors.h"
-#include "plugboards/plugboard.h"
-#include "rotors/rotor.h"
+#include "plugboard.h"
+#include "rotor.h"
 
 using namespace std;
 

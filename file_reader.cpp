@@ -1,6 +1,6 @@
 #include <fstream>
 #include "file_reader.h"
-#include "../errors.h"
+#include "errors.h"
 
 using namespace std;
 
