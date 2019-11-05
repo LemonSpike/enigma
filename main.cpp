@@ -1,9 +1,9 @@
 #include <fstream>
 #include <iostream>
 #include <map>
-#include "../errors.h"
-#include "../plugboards/plugboard.h"
-#include "../rotors/rotor.h"
+#include "errors.h"
+#include "plugboards/plugboard.h"
+#include "rotors/rotor.h"
 
 using namespace std;
 

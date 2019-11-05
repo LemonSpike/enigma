@@ -1,4 +1,4 @@
-OBJ = main/main.o file_reader/file_reader.o plugboards/plugboard.o \
+OBJ = main.o file_reader/file_reader.o plugboards/plugboard.o \
 rotors/rotor.o
 EXE = enigma
 CXX = g++
