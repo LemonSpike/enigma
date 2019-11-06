@@ -35,13 +35,9 @@ int main(int argc, char** argv) {
     return error_code;
   }
 
-  Rotor rotor(cerr);
-  int rotor_mapping[26] = {};
-  int turnover_notches[26] = {};
+  Rotor rotor(cerr, &argv[3], argc - MIN_ARG);
 
-  error_code = rotor.read_rotor_config(argv[3],
-				       rotor_mapping,
-				       turnover_notches);
+  error_code = rotor.read_all_rotors();
   if (error_code != NO_ERROR) {
     print_error(error_code, rot_mapping);
     return error_code;

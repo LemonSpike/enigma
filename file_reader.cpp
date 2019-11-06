@@ -31,8 +31,8 @@ int FileReader::read_number(ifstream& in, int& error_code) {
     error_code = (result < 26) ? NO_ERROR : INVALID_INDEX;
     if (error_code == INVALID_INDEX) {
       err_stream << "The plugboard, rotor and reflector configurations only ";
-      err_stream << "permit indices in the range 0-25 representing a letter from";
-      err_stream << " the alphabet." << endl;
+      err_stream << "permit indices in the range 0-25 representing a letter ";
+      err_stream << "from the alphabet." << endl;
     }
     return (error_code == NO_ERROR) ? result : INVALID_DIGIT;
   } else if (next < '0' || next > '9') {

@@ -5,10 +5,26 @@ using namespace std;
 class Rotor {
 
   ostream &err_stream;
+  char **filenames;
+  int **all_mappings = 0;
+  int **all_notches = 0;
+  int num_rotors;
+  int *positions;
 
 public:
 
- Rotor(ostream& stream): err_stream(stream) {}
+ Rotor(ostream& stream, char **argv, int number_of_rotors):
+  err_stream(stream), filenames(argv), num_rotors(number_of_rotors) {
+    positions = new int[num_rotors];
+  };
+
+  ~Rotor() {
+    delete[] positions;
+  }
+
+  int read_all_rotors();
+
+  int read_rotor_positions(char *filename);
 
   /**
    * This function reads the rotor configuration from a file, and
@@ -26,6 +42,6 @@ public:
 			int *turnover_notches);
 
 private:
-  int add_turnover_notch(ifstream &in, int *turnover_notches);
+  int add_turnover_notch(int number, int turnover_notches[26], int counter);
   int check_mapping(int number, int mapping[26], int counter);
 };
