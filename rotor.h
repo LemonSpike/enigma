@@ -36,19 +36,29 @@ public:
   int read_rotor_config();
 
   /*
-   * This function maps a character forwards to a different character.
-   * @param char Character to be mapped.
-   * @return map_forwards The mapped character.
+   * This function maps a character index forward through the rotor.
+   * @param input Input to be mapped.
+   * @return map_forwards The mapped input.
    */
-  char map_forwards(char character);
+  int map_forwards(int input);
 
   /*
-   * This function maps a character backwards to a different character.
-   * @param char Character to be mapped.
-   * @return map_backwards The mapped character.
+   * This function maps a input backwards through the rotor.
+   * @param input Input to be mapped.
+   * @return map_backwards The mapped input.
    */
-  char map_backwards(char character);
+  int map_backwards(int input);
 
+  /*
+   * This function checks if the position is at the notch.
+   * @return is_at_notch Returns a bool indicating if we're at the notch.
+   */
+  bool is_at_notch();
+
+ /**
+  * This rotates the rotor one position up.
+  */
+  void shift_up();
 private:
   int add_turnover_notch(int number, int counter);
   int check_mapping(int number, int counter);

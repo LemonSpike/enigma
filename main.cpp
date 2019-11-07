@@ -19,5 +19,12 @@ int main(int argc, char** argv) {
 
   Enigma enigma(cerr, argv, argc);
 
-  return enigma.read_files();
+  int read = enigma.read_files();
+  if (read != NO_ERROR)
+    return read;
+  char *message = "YOLO";
+  char *encrypted = enigma.encrypt_message(message);
+  cout << encrypted;
+  cout << enigma.encrypt_message(encrypted);
+  return NO_ERROR;
 }

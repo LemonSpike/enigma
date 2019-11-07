@@ -89,20 +89,25 @@ int Rotor::check_mapping(int number, int counter) {
   return NO_ERROR;
 }
 
-char Rotor::map_forwards(char character) {
-  return mappings[character - 'A'];
+int Rotor::map_forwards(int input) {
+  return mapping[input];
 }
 
-char Rotor::map_backwards(char character) {
+int Rotor::map_backwards(int input) {
   for (int i = 0; i < NO_OF_LETTERS; ++i) {
-    if (mapping[i] == character - 'A') {
-      return map_forwards[i + 'A'];
-    }
+    if (mapping[i] == input)
+      return map_forwards(i);
   }
+}
+
+bool Rotor::is_at_notch() {
+  for (unsigned int i = 0; i < notches.size(); ++i) {
+    if (notches[i] == position)
+      return true;
+  }
+  return false;
 }
 
 void Rotor::shift_up() {
-  for (int i = 0; i < NO_OF_LETTERS; ++i) {
-    mapping[(i + 1) % (NO_OF_LETTERS)] = mapping[i];
-  }
+  position += 1;
 }

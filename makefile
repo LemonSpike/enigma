@@ -1,4 +1,4 @@
-OBJ = main.o enigma.o file_reader.o plugboard.o rotor.o
+OBJ = main.o reflector.o enigma.o file_reader.o plugboard.o rotor.o
 EXE = enigma
 CXX = g++
 CXXFLAGS = -Wall -Wextra -g -MMD

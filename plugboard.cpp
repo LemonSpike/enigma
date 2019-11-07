@@ -75,6 +75,7 @@ int Plugboard::check_mapping(int contact_one,
     }
   }
   mapping[contact_one] = contact_two;
+  mapping[contact_two] = contact_one;
   return NO_ERROR;
 }
 
@@ -82,4 +83,8 @@ int Plugboard::check_mapping(int contact_one,
 void Plugboard::print_configuration_error() {
   err_stream << "The plugboard configuration cannot have contacts mapped to ";
   err_stream << "themselves or with more than one other contact." << endl;
+}
+
+int Plugboard::map_input(char input) {
+  return mapping[input - 'A'];
 }

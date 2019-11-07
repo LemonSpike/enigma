@@ -29,6 +29,13 @@ public:
   */
   int read_plugboard_config(const char *filename);
 
+ /**
+  * This function maps a character to an index.
+  * @param input The character to be mapped.
+  * @return map_input The mapped character.
+  */
+  int map_input(char input);
+
 private:
   int check_mapping(int contact_one,
 		    int contact_two);

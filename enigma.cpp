@@ -6,8 +6,9 @@ using namespace std;
 char *Enigma::encrypt_message(char *message) {
   char *copy = message;
   int index = 0;
+  rotors[rotors.size() - 1].shift_up();
   for (;*copy != '\0'; copy++) {
-    copy[index] = rotors[rotors.size() - 1].map_character(copy[index]);
+    copy[index] = map_through_machine(copy[index]);
     index++;
   }
   return copy;
@@ -16,9 +17,8 @@ char *Enigma::encrypt_message(char *message) {
 int Enigma::read_files() {
   int error_code = plugboard.read_plugboard_config(filenames[1]);
 
-  if (error_code != NO_ERROR) {
+  if (error_code != NO_ERROR)
     return error_code;
-  }
 
   error_code = read_all_rotors();
   if (error_code != NO_ERROR) {
@@ -78,6 +78,19 @@ int Enigma::read_rotor_positions() {
     return NO_ROTOR_STARTING_POSITION;
   }
   return NO_ERROR;
+}
+
+char Enigma::map_through_machine(char input) {
+  int output = plugboard.map_input(input);
+  for (int i = rotors.size() - 1; i > -1; --i) {
+    output = rotors[i].map_forwards(output);
+    if (rotors[i].is_at_notch() && i != 0)
+      rotors[i - 1].shift_up();
+  }
+  output = reflector.map_input(output);
+  for (unsigned int i = 0; i < rotors.size() - 1; ++i)
+    output = rotors[i].map_backwards(output);
+  return output + 'A';
 }
 
 void Enigma::print_error(int error_code, FileType type) {

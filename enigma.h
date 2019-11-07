@@ -1,6 +1,7 @@
 #ifndef ENIGMA_H
 #define ENIGMA_H
 
+#include "reflector.h"
 #include "rotor.h"
 #include "file_reader.h"
 #include "plugboard.h"
@@ -25,17 +26,19 @@ class Enigma {
   int number_of_files;
   Plugboard plugboard;
   vector<Rotor> rotors;
+  Reflector reflector;
 
  public:
  Enigma(ostream &stream, char **argv, int num_files):
   err_stream(stream), filenames(argv), number_of_files(num_files),
-    plugboard(Plugboard(err_stream)) {
+    plugboard(Plugboard(err_stream)), reflector(Reflector(err_stream)) {
   };
 
   int read_files();
   int read_all_rotors();
   int read_rotor_positions();
   char *encrypt_message(char *message);
+  char map_through_machine(char input);
 };
 
 #endif
