@@ -7,8 +7,7 @@
 
 using namespace std;
 
-int Plugboard::read_plugboard_config(const char *filename,
-				     map<int, int> mapping) {
+int Plugboard::read_plugboard_config(const char *filename) {
 
   ifstream input(filename);
 
@@ -41,7 +40,7 @@ int Plugboard::read_plugboard_config(const char *filename,
     if (error_code != NO_ERROR)
       return error_code;
 
-    error_code = check_mapping(first_number, second_number, mapping);
+    error_code = check_mapping(first_number, second_number);
     if (error_code != NO_ERROR)
       return error_code;
 
@@ -54,12 +53,10 @@ int Plugboard::read_plugboard_config(const char *filename,
  * than one connection.
  *
  * @param contact_one The position of the new contact as a relative index.
- * @param mapping The mapping of contacts expressed between indices.
  * @return check_mapping The error code is returned.
  */
 int Plugboard::check_mapping(int contact_one,
-			     int contact_two,
-                             map<int, int> mapping) {
+			     int contact_two) {
 
   if (contact_one == contact_two) {
     print_configuration_error();

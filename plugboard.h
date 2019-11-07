@@ -7,6 +7,7 @@ using namespace std;
    valid. */
 class Plugboard {
 
+  map<int, int> mapping;
   ostream &err_stream;
 
 public:
@@ -23,16 +24,14 @@ public:
   * returns an error code.
   *
   * @param filename File path of plugboard configuration.
-  * @param mapping Key mapping of plugboard configuration.
   * @return read_plugboard_config An error code is returned. This is
   * non-zero if error arises, or zero otherwise.
   */
-  int read_plugboard_config(const char *filename, map<int, int> mapping);
+  int read_plugboard_config(const char *filename);
 
 private:
   int check_mapping(int contact_one,
-		    int contact_two,
-		    map<int, int> mapping);
+		    int contact_two);
   void print_configuration_error();
 };
 
