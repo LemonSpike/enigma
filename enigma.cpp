@@ -25,6 +25,11 @@ int Enigma::read_files() {
     print_error(error_code, rot_mapping);
     return error_code;
   }
+  error_code = reflector.read_reflector_config();
+  if (error_code != NO_ERROR) {
+    print_error(error_code, rf);
+    return error_code;
+  }
   return error_code;
 }
 
