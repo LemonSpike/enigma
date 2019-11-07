@@ -25,7 +25,6 @@ class Enigma {
   int number_of_files;
   Plugboard plugboard;
   vector<Rotor> rotors;
-  vector<int> positions;
 
  public:
  Enigma(ostream &stream, char **argv, int num_files):
@@ -36,6 +35,7 @@ class Enigma {
   int read_files();
   int read_all_rotors();
   int read_rotor_positions();
+  char *encrypt_message(char *message);
 };
 
 #endif

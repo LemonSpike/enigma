@@ -14,10 +14,10 @@ class Rotor {
   char *filename;
   int mapping[NO_OF_LETTERS];
   vector<int> notches;
-  int *positions;
 
 public:
 
+  int position;
   /*
    * This function initialises the rotor with the mapping in the file.
    * @param The standard err stream.
@@ -34,6 +34,20 @@ public:
    * unsuccessful, this is a non-zero error code.
    */
   int read_rotor_config();
+
+  /*
+   * This function maps a character forwards to a different character.
+   * @param char Character to be mapped.
+   * @return map_forwards The mapped character.
+   */
+  char map_forwards(char character);
+
+  /*
+   * This function maps a character backwards to a different character.
+   * @param char Character to be mapped.
+   * @return map_backwards The mapped character.
+   */
+  char map_backwards(char character);
 
 private:
   int add_turnover_notch(int number, int counter);

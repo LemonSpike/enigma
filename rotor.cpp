@@ -88,3 +88,21 @@ int Rotor::check_mapping(int number, int counter) {
   mapping[counter] = number;
   return NO_ERROR;
 }
+
+char Rotor::map_forwards(char character) {
+  return mappings[character - 'A'];
+}
+
+char Rotor::map_backwards(char character) {
+  for (int i = 0; i < NO_OF_LETTERS; ++i) {
+    if (mapping[i] == character - 'A') {
+      return map_forwards[i + 'A'];
+    }
+  }
+}
+
+void Rotor::shift_up() {
+  for (int i = 0; i < NO_OF_LETTERS; ++i) {
+    mapping[(i + 1) % (NO_OF_LETTERS)] = mapping[i];
+  }
+}

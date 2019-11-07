@@ -3,6 +3,16 @@
 
 using namespace std;
 
+char *Enigma::encrypt_message(char *message) {
+  char *copy = message;
+  int index = 0;
+  for (;*copy != '\0'; copy++) {
+    copy[index] = rotors[rotors.size() - 1].map_character(copy[index]);
+    index++;
+  }
+  return copy;
+}
+
 int Enigma::read_files() {
   int error_code = plugboard.read_plugboard_config(filenames[1]);
 
@@ -45,7 +55,7 @@ int Enigma::read_rotor_positions() {
   FileReader reader(err_stream);
 
   int error_code = NO_ERROR;
-  int counter = 0;
+  unsigned int counter = 0;
   while (!input.eof()) {
     while (isspace(input.peek()))
       input.get();
@@ -56,11 +66,11 @@ int Enigma::read_rotor_positions() {
     if (error_code != NO_ERROR)
       return error_code;
 
-    if (positions.size() >= rotors.size()) {
+    if (counter >= rotors.size()) {
       err_stream << "Missing rotor initial positions." << endl;
       return INVALID_ROTOR_MAPPING;
     } else
-      positions.push_back(number);
+      rotors[counter].position = number;
     counter++;
   }
   if (counter == 0) {
