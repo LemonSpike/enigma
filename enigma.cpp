@@ -1,5 +1,4 @@
 #include "enigma.h"
-#include "errors.h"
 
 using namespace std;
 
@@ -25,7 +24,7 @@ int Enigma::read_files() {
     print_error(error_code, rot_mapping);
     return error_code;
   }
-  error_code = reflector.read_reflector_config();
+  error_code = reflector.read_reflector_config(filenames[2]);
   if (error_code != NO_ERROR) {
     print_error(error_code, rf);
     return error_code;
@@ -111,6 +110,10 @@ void Enigma::print_error(int error_code, FileType type) {
       cerr << "Non-numeric character for mapping in rotor file rotor.rot";
       cerr << endl;
     }
+    if (type == rf) {
+      cerr << "Non-numeric character for mapping in reflector file ";
+      cerr << "reflector.rf" << endl;
+    } 
     break;
   default:
     break;

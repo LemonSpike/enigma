@@ -1,11 +1,14 @@
 #ifndef ROTOR_H
 #define ROTOR_H
-#include <iostream>
+
 #include <vector>
+#include <fstream>
+#include <iostream>
+#include "file_reader.h"
+#include "errors.h"
+#include "constants.h"
 
 using namespace std;
-
-const int NO_OF_LETTERS = 26;
 
 /* This class reads rotor configuration files. */
 class Rotor {

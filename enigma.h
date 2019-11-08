@@ -1,16 +1,17 @@
 #ifndef ENIGMA_H
 #define ENIGMA_H
 
+#include<iostream>
+#include<vector>
 #include "reflector.h"
 #include "rotor.h"
 #include "file_reader.h"
 #include "plugboard.h"
-#include<iostream>
-#include<vector>
+#include "errors.h"
 
 using namespace std;
 
-enum FileType { comm_line, pb, reflector, rot_mapping, rot_pos };
+enum FileType { comm_line, pb, rf, rot_mapping, rot_pos };
 
 class Enigma {
 

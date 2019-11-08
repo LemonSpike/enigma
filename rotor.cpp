@@ -1,8 +1,4 @@
-#include <fstream>
-#include <iostream>
 #include "rotor.h"
-#include "file_reader.h"
-#include "errors.h"
 
 using namespace std;
 
@@ -98,6 +94,7 @@ int Rotor::map_backwards(int input) {
     if (mapping[i] == input)
       return map_forwards(i);
   }
+  return INVALID_DIGIT;
 }
 
 bool Rotor::is_at_notch() {

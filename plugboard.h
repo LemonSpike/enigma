@@ -1,13 +1,19 @@
 #ifndef PLUGBOARD_H
 #define PLUGBOARD_H
-#include <map>
+
+#include <iostream>
+#include <fstream>
+#include "errors.h"
+#include "file_reader.h"
+#include "constants.h"
+
 using namespace std;
 
 /* This class reads the plugboard config files and checks if they're
    valid. */
 class Plugboard {
 
-  map<int, int> mapping;
+  int mapping[NO_OF_LETTERS];
   ostream &err_stream;
 
 public:

@@ -1,6 +1,4 @@
-#include <fstream>
 #include <iostream>
-#include <map>
 #include "errors.h"
 #include "enigma.h"
 

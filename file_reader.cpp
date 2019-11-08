@@ -1,10 +1,9 @@
 #include <fstream>
 #include "file_reader.h"
 #include "errors.h"
+#include "constants.h"
 
 using namespace std;
-
-const int INVALID_DIGIT = -1;
 
 int FileReader::read_number(ifstream& in, int& error_code) {
   char first = get_character(in, error_code);

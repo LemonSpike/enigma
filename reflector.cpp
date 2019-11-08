@@ -1,7 +1,4 @@
-#include <iostream>
 #include "reflector.h"
-#include "errors.h"
-#include "file_reader.h"
 
 using namespace std;
 

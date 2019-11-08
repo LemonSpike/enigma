@@ -1,8 +1,11 @@
 #ifndef REFLECTOR_H
 #define REFLECTOR_H
 
-#include "rotor.h"
 #include <iostream>
+#include "constants.h"
+#include "errors.h"
+#include "file_reader.h"
+
 using namespace std;
 
 class Reflector {

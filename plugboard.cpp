@@ -1,8 +1,3 @@
-#include <iostream>
-#include <fstream>
-#include <map>
-#include "errors.h"
-#include "file_reader.h"
 #include "plugboard.h"
 
 using namespace std;
@@ -58,21 +53,10 @@ int Plugboard::read_plugboard_config(const char *filename) {
 int Plugboard::check_mapping(int contact_one,
 			     int contact_two) {
 
-  if (contact_one == contact_two) {
+  if (contact_one == contact_two || mapping[contact_one] != -1 ||
+      mapping[contact_two] != -1) {
     print_configuration_error();
     return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-  }
-
-  map<int, int>::iterator iter;
-  for ( iter = mapping.begin(); iter != mapping.end(); iter++) {
-    if (iter->first == contact_one || iter->second == contact_one) {
-      print_configuration_error();
-      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-    }
-    if (iter->first == contact_two || iter->second == contact_two) {
-      print_configuration_error();
-      return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
-    }
   }
   mapping[contact_one] = contact_two;
   mapping[contact_two] = contact_one;
