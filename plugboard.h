@@ -22,7 +22,10 @@ public:
  * @param stream the stderr stream.
  * @return Plugboard The class instance.
  */
- Plugboard(ostream& stream): err_stream(stream) {}
+ Plugboard(ostream& stream): err_stream(stream) {
+   for (int i = 0; i < NO_OF_LETTERS; ++i)
+     mapping[i] = i;
+ }
 
  /**
   * This function reads a plugboard config from a file with filename.

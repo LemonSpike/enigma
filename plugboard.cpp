@@ -15,8 +15,7 @@ int Plugboard::read_plugboard_config(const char *filename) {
 
   int error_code = NO_ERROR;
   while (!input.eof()) {
-    while (isspace(input.peek()))
-      input.get();
+    input >> ws;
     if (input.peek() == EOF)
       return NO_ERROR;
 
@@ -24,8 +23,7 @@ int Plugboard::read_plugboard_config(const char *filename) {
     if (error_code != NO_ERROR)
       return error_code;
 
-    while (isspace(input.peek()))
-      input.get();
+    input >> ws;
     if (input.peek() == EOF) {
       err_stream << "Incorrect number of parameters in plugboard file ";
       err_stream << "plugboard.pb" << endl;
@@ -53,8 +51,8 @@ int Plugboard::read_plugboard_config(const char *filename) {
 int Plugboard::check_mapping(int contact_one,
 			     int contact_two) {
 
-  if (contact_one == contact_two || mapping[contact_one] != -1 ||
-      mapping[contact_two] != -1) {
+  if (contact_one == contact_two || mapping[contact_one] != contact_one ||
+      mapping[contact_two] != contact_two) {
     print_configuration_error();
     return IMPOSSIBLE_PLUGBOARD_CONFIGURATION;
   }

@@ -22,7 +22,8 @@ int main(int argc, char** argv) {
     return read;
   char *message = "YOLO";
   char *encrypted = enigma.encrypt_message(message);
-  cout << encrypted;
-  cout << enigma.encrypt_message(encrypted);
+  cout << encrypted << endl;
+  
+  cout << enigma.encrypt_message(encrypted) << endl;
   return NO_ERROR;
 }

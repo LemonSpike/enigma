@@ -20,8 +20,7 @@ int Rotor::read_rotor_config() {
     mapping[i] = -1;
 
   while (!input.eof()) {
-    while (isspace(input.peek()))
-      input.get();
+    input >> ws;
     if (input.peek() == EOF)
       break;
 

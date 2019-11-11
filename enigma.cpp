@@ -3,12 +3,12 @@
 using namespace std;
 
 char *Enigma::encrypt_message(char *message) {
-  char *copy = message;
-  int index = 0;
+  char *copy = (char *) malloc(strlen(message) + 1);
+  strcpy(copy, message);
   rotors[rotors.size() - 1].shift_up();
-  for (;*copy != '\0'; copy++) {
-    copy[index] = map_through_machine(copy[index]);
-    index++;
+  for (int index = 0; index < strlen(message); index++) {
+    char value = copy[index];
+    copy[index] = map_through_machine(value);
   }
   return copy;
 }

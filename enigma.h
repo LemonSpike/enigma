@@ -1,8 +1,9 @@
 #ifndef ENIGMA_H
 #define ENIGMA_H
 
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
+#include <string.h>
 #include "reflector.h"
 #include "rotor.h"
 #include "file_reader.h"
