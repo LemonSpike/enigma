@@ -70,8 +70,7 @@ int Enigma::read_rotor_positions() {
       return error_code;
 
     if (counter == rotors.size()) {
-      err_stream << "Extra rotor initial positions." << endl;
-      return INVALID_ROTOR_MAPPING;
+      break;
     } else
       rotors[counter].position = number;
     counter++;
