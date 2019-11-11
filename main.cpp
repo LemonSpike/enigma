@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctype.h>
 #include "errors.h"
 #include "enigma.h"
 
@@ -20,10 +21,17 @@ int main(int argc, char** argv) {
   int read = enigma.read_files();
   if (read != NO_ERROR)
     return read;
-  char *message = "ZA";
-  char *encrypted = enigma.encrypt_message(message);
-  cout << encrypted << endl;
 
-  cout << enigma.encrypt_message(encrypted) << endl;
+  char message;
+  while (!cin.eof() &&cin >> ws >> message) {
+    if (!isupper(message)) {
+      cerr << "Only uppercase characters are allowed in the message." << endl;
+      return INVALID_INPUT_CHARACTER;
+    }
+    char encrypted = enigma.encrypt_message(message);
+    cout << encrypted;
+  }
+  cout << endl;
+
   return NO_ERROR;
 }

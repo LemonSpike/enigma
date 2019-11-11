@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <vector>
-#include <string.h>
 #include "reflector.h"
 #include "rotor.h"
 #include "file_reader.h"
@@ -39,7 +38,7 @@ class Enigma {
   int read_files();
   int read_all_rotors();
   int read_rotor_positions();
-  char *encrypt_message(char *message);
+  char encrypt_message(char message);
   char map_through_machine(char input);
 };
 

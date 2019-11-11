@@ -2,15 +2,9 @@
 
 using namespace std;
 
-char *Enigma::encrypt_message(char *message) {
-  char *copy = (char *) malloc(strlen(message) + 1);
-  strcpy(copy, message);
+char Enigma::encrypt_message(char message) {
   rotors[rotors.size() - 1].shift_up();
-  for (int index = 0; index < strlen(message); index++) {
-    char value = copy[index];
-    copy[index] = map_through_machine(value);
-  }
-  return copy;
+  return map_through_machine(message);;
 }
 
 int Enigma::read_files() {
@@ -85,12 +79,8 @@ int Enigma::read_rotor_positions() {
 }
 
 char Enigma::map_through_machine(char input) {
+
   int output = plugboard.map_char_input(input);
-  output = rotors[2].map_forwards(output);
-  output = reflector.map_input(output);
-  output = rotors[2].map_backwards(output);
-  output = plugboard.map_input(output);
-  /*
   for (int i = rotors.size() - 1; i > -1; --i) {
     output = rotors[i].map_forwards(output);
     if (rotors[i].is_at_notch() && i != 0)
@@ -103,7 +93,7 @@ char Enigma::map_through_machine(char input) {
       rotors[i - 1].shift_up();
   }
   output = plugboard.map_input(output);
-  */
+
   return output + 'A';
 }
 
