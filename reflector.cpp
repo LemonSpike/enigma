@@ -26,7 +26,7 @@ int Reflector::read_reflector_config(const char *filename) {
 
     input >> ws;
     if (input.peek() == EOF) {
-      err_stream << "Incorrect number of parameters in reflector file ";
+      err_stream << "Incorrect (odd) number of parameters in reflector file ";
       err_stream << "reflector.rf" << endl;
       return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
     }
@@ -40,7 +40,7 @@ int Reflector::read_reflector_config(const char *filename) {
     counter++;
   }
   if (counter < 13) {
-    err_stream << "Incorrect number of parameters in reflector file ";
+    err_stream << "Insufficient number of mappings in reflector file: ";
     err_stream << "reflector.rf" << endl;
     return INCORRECT_NUMBER_OF_REFLECTOR_PARAMETERS;
   }

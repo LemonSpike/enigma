@@ -8,19 +8,26 @@ char Enigma::encrypt_message(char message) {
 }
 
 int Enigma::read_files() {
-  int error_code = plugboard.read_plugboard_config(filenames[1]);
 
+  int error_code = plugboard.read_plugboard_config(filenames[1]);
   if (error_code != NO_ERROR)
     return error_code;
+
+  error_code = reflector.read_reflector_config(filenames[2]);
+  if (error_code != NO_ERROR) {
+    print_error(error_code, rf);
+    return error_code;
+  }
 
   error_code = read_all_rotors();
   if (error_code != NO_ERROR) {
     print_error(error_code, rot_mapping);
     return error_code;
   }
-  error_code = reflector.read_reflector_config(filenames[2]);
+
+  error_code = read_rotor_positions();
   if (error_code != NO_ERROR) {
-    print_error(error_code, rf);
+    print_error(error_code, rot_pos);
     return error_code;
   }
   return error_code;
@@ -35,7 +42,6 @@ int Enigma::read_all_rotors() {
       return error;
     rotors.push_back(rotor);
   }
-  error = read_rotor_positions();
   return error;
 }
 
@@ -55,8 +61,7 @@ int Enigma::read_rotor_positions() {
   int error_code = NO_ERROR;
   unsigned int counter = 0;
   while (!input.eof()) {
-    while (isspace(input.peek()))
-      input.get();
+    input >> ws;
     if (input.peek() == EOF)
       break;
 
@@ -64,15 +69,16 @@ int Enigma::read_rotor_positions() {
     if (error_code != NO_ERROR)
       return error_code;
 
-    if (counter >= rotors.size()) {
-      err_stream << "Missing rotor initial positions." << endl;
+    if (counter == rotors.size()) {
+      err_stream << "Extra rotor initial positions." << endl;
       return INVALID_ROTOR_MAPPING;
     } else
       rotors[counter].position = number;
     counter++;
   }
   if (counter == 0) {
-    err_stream << "No rotor starting positions." << endl;
+    err_stream << "No starting position for rotor 0 in rotor position file: ";
+    err_stream << "rotor.pos" << endl;
     return NO_ROTOR_STARTING_POSITION;
   }
   return NO_ERROR;
@@ -100,19 +106,22 @@ char Enigma::map_through_machine(char input) {
 void Enigma::print_error(int error_code, FileType type) {
   switch (error_code) {
   case INVALID_INPUT_CHARACTER:
-    cerr << "The message to be encrypted needs to consist of only ";
-    cerr << "whitespace or upper case characters." << endl;
+    err_stream << "The message to be encrypted needs to consist of only ";
+    err_stream << "whitespace or upper case characters." << endl;
     break;
   case NON_NUMERIC_CHARACTER:
-    if (type == pb)
-      cerr << "Non-numeric character in plugboard file plugboard.pb" << endl;
-    if (type == rot_mapping) {
-      cerr << "Non-numeric character for mapping in rotor file rotor.rot";
-      cerr << endl;
-    }
-    if (type == rf) {
-      cerr << "Non-numeric character for mapping in reflector file ";
-      cerr << "reflector.rf" << endl;
+    if (type == pb) {
+      err_stream << "Non-numeric character in plugboard file plugboard.pb";
+      err_stream << endl;
+    } if (type == rot_mapping) {
+      err_stream << "Non-numeric character for mapping in rotor file rotor.rot";
+      err_stream << endl;
+    } if (type == rot_pos) {
+      err_stream << "Non-numeric character in rotor positions file rotor.pos";
+      err_stream << endl;
+    } if (type == rf) {
+      err_stream << "Non-numeric character for mapping in reflector file ";
+      err_stream << "reflector.rf" << endl;
     }
     break;
   default:
