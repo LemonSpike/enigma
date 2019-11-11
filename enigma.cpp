@@ -75,7 +75,7 @@ int Enigma::read_rotor_positions() {
       rotors[counter].position = number;
     counter++;
   }
-  if (counter == 0) {
+  if (counter == 0 && rotors.size() > 0) {
     err_stream << "No starting position for rotor 0 in rotor position file: ";
     err_stream << "rotor.pos" << endl;
     return NO_ROTOR_STARTING_POSITION;
@@ -119,7 +119,7 @@ void Enigma::print_error(int error_code, FileType type) {
       err_stream << "Non-numeric character in rotor positions file rotor.pos";
       err_stream << endl;
     } if (type == rf) {
-      err_stream << "Non-numeric character for mapping in reflector file ";
+      err_stream << "Non-numeric character in reflector file ";
       err_stream << "reflector.rf" << endl;
     }
     break;
