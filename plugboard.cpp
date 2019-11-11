@@ -67,6 +67,10 @@ void Plugboard::print_configuration_error() {
   err_stream << "themselves or with more than one other contact." << endl;
 }
 
-int Plugboard::map_input(char input) {
+int Plugboard::map_char_input(char input) {
   return mapping[input - 'A'];
+}
+
+int Plugboard::map_input(int input) {
+  return mapping[input];
 }

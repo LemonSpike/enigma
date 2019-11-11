@@ -43,7 +43,9 @@ public:
   * @param input The character to be mapped.
   * @return map_input The mapped character.
   */
-  int map_input(char input);
+  int map_char_input(char input);
+
+  int map_input(int input);
 
 private:
   int check_mapping(int contact_one,

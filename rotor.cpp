@@ -66,7 +66,6 @@ int Rotor::add_turnover_notch(int number,
  * This function checks for letters mapped to the same position, and
  * returns an error if found.
  * @param number The number to be added to the mapping.
- * @param mapping The mapping of letters to zero-based indices.
  * @param counter The index position to insert into the mapping.
  * @return check_mapping This returns a non-zero error code if mapping
  * is not valid. Otherwise NO_ERROR is returned.
@@ -85,13 +84,13 @@ int Rotor::check_mapping(int number, int counter) {
 }
 
 int Rotor::map_forwards(int input) {
-  return mapping[input];
+  return mapping[(input - position + NO_OF_LETTERS) % NO_OF_LETTERS];
 }
 
 int Rotor::map_backwards(int input) {
   for (int i = 0; i < NO_OF_LETTERS; ++i) {
-    if (mapping[i] == input)
-      return map_forwards(i);
+    if (mapping[(i - position + NO_OF_LETTERS) % NO_OF_LETTERS] == input)
+      return i;
   }
   return INVALID_DIGIT;
 }

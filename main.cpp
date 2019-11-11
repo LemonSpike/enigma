@@ -20,10 +20,10 @@ int main(int argc, char** argv) {
   int read = enigma.read_files();
   if (read != NO_ERROR)
     return read;
-  char *message = "YOLO";
+  char *message = "ZA";
   char *encrypted = enigma.encrypt_message(message);
   cout << encrypted << endl;
-  
+
   cout << enigma.encrypt_message(encrypted) << endl;
   return NO_ERROR;
 }

@@ -85,15 +85,25 @@ int Enigma::read_rotor_positions() {
 }
 
 char Enigma::map_through_machine(char input) {
-  int output = plugboard.map_input(input);
+  int output = plugboard.map_char_input(input);
+  output = rotors[2].map_forwards(output);
+  output = reflector.map_input(output);
+  output = rotors[2].map_backwards(output);
+  output = plugboard.map_input(output);
+  /*
   for (int i = rotors.size() - 1; i > -1; --i) {
     output = rotors[i].map_forwards(output);
     if (rotors[i].is_at_notch() && i != 0)
       rotors[i - 1].shift_up();
   }
   output = reflector.map_input(output);
-  for (unsigned int i = 0; i < rotors.size() - 1; ++i)
+  for (unsigned int i = 0; i < rotors.size(); ++i) {
     output = rotors[i].map_backwards(output);
+    if (rotors[i].is_at_notch() && i != 0)
+      rotors[i - 1].shift_up();
+  }
+  output = plugboard.map_input(output);
+  */
   return output + 'A';
 }
 
@@ -113,7 +123,7 @@ void Enigma::print_error(int error_code, FileType type) {
     if (type == rf) {
       cerr << "Non-numeric character for mapping in reflector file ";
       cerr << "reflector.rf" << endl;
-    } 
+    }
     break;
   default:
     break;

@@ -55,7 +55,8 @@ int Reflector::read_reflector_config(const char *filename) {
  * @return check_mapping The error code is returned.
  */
 int Reflector::check_mapping(int first_number, int second_number) {
-  if (mapping[first_number] != -1 || first_number == second_number) {
+  if (mapping[first_number] != -1 || mapping[second_number] != -1 ||
+      first_number == second_number) {
     err_stream << "The reflector configuration cannot have contacts mapped to ";
     err_stream << "themselves or with more than one other contact." << endl;
     return INVALID_REFLECTOR_MAPPING;
