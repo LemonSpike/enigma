@@ -75,7 +75,7 @@ int Rotor::check_mapping(int number, int counter) {
     if (mapping[i] == number) {
       err_stream << "Invalid mapping of input " << counter << " to output ";
       err_stream << number << " (output " << number << " is already mapped to";
-      err_stream << " from input " << i << ") in" << endl;
+      err_stream << " from input " << i << ") in rotor.rot" << endl;
       return INVALID_ROTOR_MAPPING;
     }
   }
