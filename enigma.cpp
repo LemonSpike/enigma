@@ -97,8 +97,6 @@ char Enigma::map_through_machine(char input) {
   }
   output = reflector.map_input(output);
   for (unsigned int i = 0; i < rotors.size(); ++i) {
-    if (rotors[i].is_at_notch() && i != 0)
-      rotors[i - 1].shift_up();
     output = rotors[i].map_backwards(output);
     output = (output - rotors[i].position + NO_OF_LETTERS) % NO_OF_LETTERS;
   }
