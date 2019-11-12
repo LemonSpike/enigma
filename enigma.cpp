@@ -11,8 +11,10 @@ char Enigma::encrypt_message(char message) {
 int Enigma::read_files() {
 
   int error_code = plugboard.read_plugboard_config(filenames[1]);
-  if (error_code != NO_ERROR)
+  if (error_code != NO_ERROR) {
+    print_error(error_code, pb);
     return error_code;
+  }
 
   error_code = reflector.read_reflector_config(filenames[2]);
   if (error_code != NO_ERROR) {
