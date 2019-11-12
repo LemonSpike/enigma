@@ -25,7 +25,8 @@ int main(int argc, char** argv) {
   char message;
   while (cin >> ws >> message && !cin.eof()) {
     if (!isupper(message)) {
-      cerr << "Only uppercase characters are allowed in the message." << endl;
+      cerr << message << " is not a valid input character (input characters ";
+      cerr << "must be upper case letters A-Z)!" << endl;
       return INVALID_INPUT_CHARACTER;
     }
     char encrypted = enigma.encrypt_message(message);
