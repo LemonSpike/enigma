@@ -87,16 +87,16 @@ char Enigma::map_through_machine(char input) {
 
   int output = plugboard.map_char_input(input);
   for (int i = rotors.size() - 1; i > -1; --i) {
-    output = rotors[i].map_forwards(output);
     if (rotors[i].is_at_notch() && i != 0)
       rotors[i - 1].shift_up();
+    output = rotors[i].map_forwards(output);
     output = (output - rotors[i].position + NO_OF_LETTERS) % NO_OF_LETTERS;
   }
   output = reflector.map_input(output);
   for (unsigned int i = 0; i < rotors.size(); ++i) {
-    output = rotors[i].map_backwards(output);
     if (rotors[i].is_at_notch() && i != 0)
       rotors[i - 1].shift_up();
+    output = rotors[i].map_backwards(output);
     output = (output - rotors[i].position + NO_OF_LETTERS) % NO_OF_LETTERS;
   }
   output = plugboard.map_input(output);

@@ -104,5 +104,5 @@ bool Rotor::is_at_notch() {
 }
 
 void Rotor::shift_up() {
-  position += 1;
+  position = (position + 1) % NO_OF_LETTERS;
 }
