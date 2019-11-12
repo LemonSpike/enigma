@@ -50,7 +50,7 @@ char FileReader::get_character(ifstream& in, int& error_code) {
   char character = in.get();
   if (in.fail()) {
     error_code = ERROR_OPENING_CONFIGURATION_FILE;
-    err_stream << "Error opening plugboard configuration file.";
+    err_stream << "Error opening configuration file.";
     return EOF;
   }
   return character;

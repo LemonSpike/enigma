@@ -45,7 +45,7 @@ int Rotor::read_rotor_config() {
 
 /**
  * This function reads notch positions from the input stream.
- * @param number This is the notch position number to insert.
+ * @param number This is the notch position to be stored.
  * @param counter The notch index.
  * @return add_turnover_notch This returns an error code or 0 if successful.
  */
@@ -65,8 +65,8 @@ int Rotor::add_turnover_notch(int number,
 /**
  * This function checks for letters mapped to the same position, and
  * returns an error if found.
- * @param number The number to be added to the mapping.
- * @param counter The index position to insert into the mapping.
+ * @param number The number to be mapped to.
+ * @param counter The index position to be mapped.
  * @return check_mapping This returns a non-zero error code if mapping
  * is not valid. Otherwise NO_ERROR is returned.
  */

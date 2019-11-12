@@ -20,7 +20,8 @@ class Rotor {
 
 public:
 
-  int position;
+  int position; // The relative position of the rotor (affected by rotations).
+
   /*
    * This function initialises the rotor with the mapping in the file.
    * @param The standard err stream.

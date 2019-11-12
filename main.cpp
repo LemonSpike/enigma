@@ -16,12 +16,14 @@ int main(int argc, char** argv) {
     return INSUFFICIENT_NUMBER_OF_PARAMETERS;
   }
 
+  // Read configuration files to set up the machine.
   Enigma enigma(cerr, argv, argc);
 
   int read = enigma.read_files();
   if (read != NO_ERROR)
     return read;
 
+  // Read through the input stream.
   char message;
   while (cin >> ws >> message && !cin.eof()) {
     if (!isupper(message)) {

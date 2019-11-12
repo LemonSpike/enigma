@@ -45,6 +45,11 @@ public:
   */
   int map_char_input(char input);
 
+ /**
+  * This function maps the input on its reflected path through the machine.
+  * @param input The input to be mapped.
+  * @return map_input The mapped input.
+  */
   int map_input(int input);
 
 private:

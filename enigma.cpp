@@ -36,6 +36,11 @@ int Enigma::read_files() {
   return error_code;
 }
 
+/**
+ * This function reads all the rotor config files, and stores the
+ * configured rotors.
+ * @return read_all_rotors The error code is returned.
+ */
 int Enigma::read_all_rotors() {
   int error = NO_ERROR;
   for (int i = 3; i < number_of_files - 1; ++i) {
@@ -48,6 +53,10 @@ int Enigma::read_all_rotors() {
   return error;
 }
 
+/**
+ * This function reads the rotor initial positions from a file.
+ * @return read_rotor_positions The error code is returned.
+ */
 int Enigma::read_rotor_positions() {
 
   char *filename = filenames[number_of_files - 1];
@@ -86,20 +95,28 @@ int Enigma::read_rotor_positions() {
   return NO_ERROR;
 }
 
+/** This function maps the character through the machine.
+ * @param input The input character.
+ * @return map_through_machine The mapped character.
+ */
 char Enigma::map_through_machine(char input) {
 
   int output = plugboard.map_char_input(input);
+
   for (int i = rotors.size() - 1; i > -1; --i) {
     if (rotors[i].is_at_notch() && i != 0)
       rotors[i - 1].shift_up();
     output = rotors[i].map_forwards(output);
     output = (output - rotors[i].position + NO_OF_LETTERS) % NO_OF_LETTERS;
   }
+
   output = reflector.map_input(output);
+
   for (unsigned int i = 0; i < rotors.size(); ++i) {
     output = rotors[i].map_backwards(output);
     output = (output - rotors[i].position + NO_OF_LETTERS) % NO_OF_LETTERS;
   }
+
   output = plugboard.map_input(output);
 
   return output + 'A';
