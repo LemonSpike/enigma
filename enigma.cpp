@@ -3,7 +3,8 @@
 using namespace std;
 
 char Enigma::encrypt_message(char message) {
-  rotors[rotors.size() - 1].shift_up();
+  if (rotors.size() > 0)
+    rotors[rotors.size() - 1].shift_up();
   return map_through_machine(message);;
 }
 
