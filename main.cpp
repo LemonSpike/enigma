@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     return read;
 
   char message;
-  while (!cin.eof() &&cin >> ws >> message) {
+  while (cin >> ws >> message) {
     if (!isupper(message)) {
       cerr << "Only uppercase characters are allowed in the message." << endl;
       return INVALID_INPUT_CHARACTER;

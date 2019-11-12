@@ -90,12 +90,14 @@ char Enigma::map_through_machine(char input) {
     output = rotors[i].map_forwards(output);
     if (rotors[i].is_at_notch() && i != 0)
       rotors[i - 1].shift_up();
+    output = (output - rotors[i].position + NO_OF_LETTERS) % NO_OF_LETTERS;
   }
   output = reflector.map_input(output);
   for (unsigned int i = 0; i < rotors.size(); ++i) {
     output = rotors[i].map_backwards(output);
     if (rotors[i].is_at_notch() && i != 0)
       rotors[i - 1].shift_up();
+    output = (output - rotors[i].position + NO_OF_LETTERS) % NO_OF_LETTERS;
   }
   output = plugboard.map_input(output);
 

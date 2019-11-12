@@ -84,12 +84,12 @@ int Rotor::check_mapping(int number, int counter) {
 }
 
 int Rotor::map_forwards(int input) {
-  return mapping[(input - position + NO_OF_LETTERS) % NO_OF_LETTERS];
+  return mapping[(input + position) % NO_OF_LETTERS];
 }
 
 int Rotor::map_backwards(int input) {
   for (int i = 0; i < NO_OF_LETTERS; ++i) {
-    if (mapping[(i - position + NO_OF_LETTERS) % NO_OF_LETTERS] == input)
+    if (mapping[i] == (input + position) % NO_OF_LETTERS)
       return i;
   }
   return INVALID_DIGIT;
