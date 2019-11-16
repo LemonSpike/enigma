@@ -1,5 +1,4 @@
 #include <iostream>
-#include <ctype.h>
 #include "errors.h"
 #include "enigma.h"
 
@@ -34,7 +33,6 @@ int main(int argc, char** argv) {
     char encrypted = enigma.encrypt_message(message);
     cout << encrypted;
   }
-  cout << endl;
 
   return NO_ERROR;
 }
