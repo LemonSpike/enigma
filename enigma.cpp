@@ -10,24 +10,28 @@ char Enigma::encrypt_message(char message) {
 
 int Enigma::read_files() {
 
+  // read plugboard.
   int error_code = plugboard.read_plugboard_config(filenames[1]);
   if (error_code != NO_ERROR) {
     print_error(error_code, pb);
     return error_code;
   }
 
+  // read reflector.
   error_code = reflector.read_reflector_config(filenames[2]);
   if (error_code != NO_ERROR) {
     print_error(error_code, rf);
     return error_code;
   }
 
+  // read rotor mappings.
   error_code = read_all_rotors();
   if (error_code != NO_ERROR) {
     print_error(error_code, rot_mapping);
     return error_code;
   }
 
+  // read rotor initial positions.
   error_code = read_rotor_positions();
   if (error_code != NO_ERROR) {
     print_error(error_code, rot_pos);
@@ -132,13 +136,13 @@ void Enigma::print_error(int error_code, FileType type) {
     if (type == pb) {
       err_stream << "Non-numeric character in plugboard file plugboard.pb";
       err_stream << endl;
-    } if (type == rot_mapping) {
+    } else if (type == rot_mapping) {
       err_stream << "Non-numeric character for mapping in rotor file rotor.rot";
       err_stream << endl;
-    } if (type == rot_pos) {
+    } else if (type == rot_pos) {
       err_stream << "Non-numeric character in rotor positions file rotor.pos";
       err_stream << endl;
-    } if (type == rf) {
+    } else if (type == rf) {
       err_stream << "Non-numeric character in reflector file ";
       err_stream << "reflector.rf" << endl;
     }

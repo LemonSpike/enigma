@@ -54,7 +54,7 @@ public:
 
 private:
   int check_mapping(int contact_one,
-		    int contact_two);
+                    int contact_two);
   void print_configuration_error();
 };
 

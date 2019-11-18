@@ -46,7 +46,7 @@ int Rotor::read_rotor_config() {
 /**
  * This function reads notch positions from the input stream.
  * @param number This is the notch position to be stored.
- * @param counter The notch index.
+ * @param counter The notch index in the notches array.
  * @return add_turnover_notch This returns an error code or 0 if successful.
  */
 int Rotor::add_turnover_notch(int number,

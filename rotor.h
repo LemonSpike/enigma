@@ -63,6 +63,7 @@ public:
   * This rotates the rotor one position up.
   */
   void shift_up();
+
 private:
   int add_turnover_notch(int number, int counter);
   int check_mapping(int number, int counter);

@@ -49,7 +49,7 @@ int Plugboard::read_plugboard_config(const char *filename) {
  * @return check_mapping The error code is returned.
  */
 int Plugboard::check_mapping(int contact_one,
-			     int contact_two) {
+                             int contact_two) {
 
   if (contact_one == contact_two || mapping[contact_one] != contact_one ||
       mapping[contact_two] != contact_two) {

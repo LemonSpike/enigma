@@ -29,6 +29,8 @@ class Enigma {
   vector<Rotor> rotors;
   Reflector reflector;
 
+  // Note that private functions in this repository have comments in their
+  // respective implementation files (for information hiding).
   int read_all_rotors();
   int read_rotor_positions();
   char map_through_machine(char input);
